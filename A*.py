@@ -8,7 +8,8 @@ def index(puzzle, list):
     else:
         return -1
 
-class Puzzle: #The class that represents the puzzles, their characteristics, and their functions. n is the dimension of
+class Puzzle:
+    #The class that represents the puzzles, their characteristics, and their functions. n is the dimension of
     #the puzzle. Zero represents the empty spot in the puzzle where neighbor tiles can be moved to.
     def __init__(self,n):
         self.distance= 0 #distance away from solution
@@ -18,7 +19,8 @@ class Puzzle: #The class that represents the puzzles, their characteristics, and
         self.matrix = createSolution(n) #3x3 array of the matrix
         self.solution = createSolution(n) #solution matrix
 
-    def randomize(self,numMoves): #Function that shuffles a solution to get a random puzzle. As numMoves increases,
+    def randomize(self,numMoves):
+        #Function that shuffles a solution to get a random puzzle. As numMoves increases,
         #the difficulty of the puzzles tend to increase. If numMoves is 100, most of the puzzles take too long to solve.
         for i in range(0,numMoves):
             moves = self.getPossibleMoves()
@@ -66,7 +68,7 @@ class Puzzle: #The class that represents the puzzles, their characteristics, and
                     distance = distance + score
         return distance
 
-    def findPath(self,path):
+    def findPath(self, path):
         if self.previous is None:
             return path
         else:
@@ -86,7 +88,6 @@ class Puzzle: #The class that represents the puzzles, their characteristics, and
             map[self.swapAndCopy(move)] = moves
         return map
 
-
     def swapAndCopy(self,b):
         p = self.copy()
         p.swapTiles(b)
@@ -94,7 +95,7 @@ class Puzzle: #The class that represents the puzzles, their characteristics, and
         p.previous = self
         return p
 
-    def solve(self):
+    def a_star_solve(self):
         openList = [self]
         closedList = []
         while len(openList) > 0:
@@ -113,13 +114,13 @@ class Puzzle: #The class that represents the puzzles, their characteristics, and
                 if closedIndex == -1 and openIndex == -1:
                     child.distance = distance
                     openList.append(child)
-                elif openIndex>-1:
+                elif openIndex > -1:
                     copy = openList[openIndex]
                     if value < copy.distance + copy.height:
                         copy.distance = distance
                         copy.previous = child.previous
                         copy.height = child.height
-                elif closedIndex>-1:
+                elif closedIndex > -1:
                     copy = closedList[closedIndex]
                     if value < copy.distance + copy.height:
                         child.distance = distance
@@ -129,17 +130,32 @@ class Puzzle: #The class that represents the puzzles, their characteristics, and
             openList = sorted(openList, key=lambda p: p.distance + p.height)
         return []
 
+    def bfs_solve(self):
+        frontier = [self]  # queue
+        while frontier:  # while frontier has items in it
+            puzzle = frontier.pop(0)  # the node the frontier is working on
+            children = puzzle.createMoves()
+            for child in children:
+                if np.all(child.matrix == puzzle.solution):
+                        return puzzle.findPath([])
+                else:
+                    frontier.append(child)
+        return []
+
+
 def createSolution(n):
     solution = np.arange(1, (n ** 2) + 1).reshape(n, n)
     solution[n - 1][n - 1] = 0
     return solution
+
 
 def run(n,shuffle):
     puzzle = Puzzle(n)
     puzzle.randomize(shuffle)
     print("\n".join(' '.join(map(str, row)) for row in puzzle.matrix))
     print()
-    path = puzzle.solve()
+    #path = puzzle.a_star_solve() #the list of moves it takes to solve the puzzle
+    path = puzzle.bfs_solve()
     path.reverse()
     moves = 0
     for i in path:
@@ -150,4 +166,6 @@ def run(n,shuffle):
         print(0)
     else:
         print(moves, "moves")
+
+
 run(3,20)

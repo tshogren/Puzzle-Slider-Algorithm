@@ -238,7 +238,9 @@ def runBFSTime(puzzle): #Function that times how long it takes the BFS algorithm
         moves += 1
         print("\n".join(' '.join(map(str, row)) for row in i.matrix))
         print()
-    if moves == 1:
+    if moves == 0:
+        print("\n".join(' '.join(map(str, row)) for row in createSolution(puzzle.size)))
+        print()
         print(0, "moves")
         endTimeBFS = time.time()
         print(endTimeBFS - startTimeBFS)
@@ -288,4 +290,3 @@ def runTime(shuffle,n): #Function that compares how long the two algorithms take
 #runTime(20,3)
 #runTime(40,3)
 #runTime(60,3)
-

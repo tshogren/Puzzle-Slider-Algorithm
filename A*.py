@@ -287,6 +287,6 @@ def runTime(shuffle,n): #Function that compares how long the two algorithms take
     print(shuffle, "shuffles takes about", averageAStarTime, "seconds to solve using A* with", totalExceptionsAStar, "exceptions being counted as 60 seconds each")
     print(shuffle, "shuffles takes about", averageBFSTime, "seconds to solve using BFS with", totalExceptionsBFS, "exceptions being counted as 60 seconds each")
 
-#runTime(20,3)
+runTime(20,3)
 #runTime(40,3)
 #runTime(60,3)

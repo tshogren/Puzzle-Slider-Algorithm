@@ -141,12 +141,15 @@ class Puzzle:
         frontier = [self]  # queue
         while frontier:  # while frontier has items in it
             puzzle = frontier.pop(0)  # the node the frontier is working on
-            children = puzzle.createMoves()
-            for child in children:
-                if np.all(child.matrix == puzzle.solution):
-                        return puzzle.findPath([])
-                else:
-                    frontier.append(child)
+            if np.all(puzzle.matrix == puzzle.solution):
+                return puzzle.findPath([])
+            else:
+                children = puzzle.createMoves()
+                for child in children:
+                    if np.all(child.matrix == puzzle.solution):
+                        return child.findPath([])
+                    else:
+                        frontier.append(child)
         return []
 
 def index(puzzle, list): #Returns the index of the puzzle in the list if it is in the list, or else it returns -1.
@@ -175,7 +178,7 @@ def runAStar(n,shuffle): #Function that solves a nxn puzzle using A* and prints 
         print("\n".join(' '.join(map(str, row)) for row in i.matrix))
         print()
     if moves == 1:
-        print(0)
+        print(0, "moves")
     else:
         print(moves, "moves")
 
@@ -191,8 +194,10 @@ def runBFS(n,shuffle): #Function that solves a nxn puzzle using BFS and prints t
         moves += 1
         print("\n".join(' '.join(map(str, row)) for row in i.matrix))
         print()
-    if moves == 1:
-        print(0)
+    if moves == 0:
+        print("\n".join(' '.join(map(str, row)) for row in createSolution(n)))
+        print()
+        print(0, "moves")
     else:
         print(moves, "moves")
 
@@ -280,4 +285,7 @@ def runTime(shuffle,n): #Function that compares how long the two algorithms take
     print(shuffle, "shuffles takes about", averageAStarTime, "seconds to solve using A* with", totalExceptionsAStar, "exceptions being counted as 60 seconds each")
     print(shuffle, "shuffles takes about", averageBFSTime, "seconds to solve using BFS with", totalExceptionsBFS, "exceptions being counted as 60 seconds each")
 
-runTime(20,3)
+#runTime(20,3)
+#runTime(40,3)
+#runTime(60,3)
+

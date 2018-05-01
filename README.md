@@ -10,7 +10,7 @@ A sliding puzzle that consists of a frame of numbered square tiles in random ord
 
 where 0 indicates the missing tile.
 
-## A Search Algorithm
+## A-star Search Algorithm
 Uses heuristics to help determine the best path
 Searches paths based on whether or not they appear to be coming closer to the solution
 NxN puzzle: value based on depth of the search & distance from current state to solution state (Manhattan Distance)

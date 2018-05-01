@@ -1,5 +1,5 @@
 # Puzzle-Slider-Algorithm
-Our program addresses various ways to solve a sliding grid puzzle end to end. We use two different algorithms, Breadth First Search, and A* search, and compare which algorithm is faster for solving it. We also used the algorithm to solve different-sized puzzles as well as easier and hard puzzles and compared how efficiently the two algorithms scaled up. We tested the algorithms on 3x3 and 4x4 grids and at each of those dimensions, we ran the program on puzzles that had been shuffled 10 times, and 20 times. The difficulty of the puzzle tends to increase with the number of times it has been shuffled. Originally, we wanted to include a 5x5 grid as well, but it would have taken too much time to run the program and find a solution that it did not seem feasible. A* search was found to be significantly faster than BFS--especially as the size and difficulty of the puzzle increased. 
+Our program addresses various ways to solve a sliding grid puzzle end to end. We use two different algorithms, Breadth First Search, and A* search, and compare which algorithm is faster for solving it. We also used the algorithm to solve different-sized puzzles as well as easier and hard puzzles and compared how efficiently the two algorithms scaled up. We tested the algorithms on 3x3 and 4x4 grids and at each of those dimensions, we ran the program on puzzles that had been shuffled 10 times, and 20 times. The difficulty of the puzzle tends to increase with the number of times it has been shuffled. A* search was found to be significantly faster than BFS--especially as the size and difficulty of the puzzle increased. 
 
 ## NxN Sliding Puzzle
 A sliding puzzle that consists of a frame of numbered square tiles in random order with one tile missing. For this program, the goal state of a 3x3 sliding puzzle looks like this:
@@ -34,5 +34,7 @@ If the best path is not found after 60 seconds, a time exception is thrown. The 
 * https://en.wikipedia.org/wiki/Breadth-first_search 
 * https://en.wikipedia.org/wiki/15_puzzle 
 
+## Notes
 
+Since the program uses 'SIGALRM' attribute in module Signal, which is only available on MacOS and UNIX, the program can only run on these two operating systems.
 

@@ -286,10 +286,11 @@ def printPuzzle(puzzle):
     print()
 
 
-def runAverage(shuffle, n):
+def runAverage(shuffle, n, avg):
     """Shuffle: the number of times each puzzle will be shuffled. The higher the number of shuffles, the harder the
     puzzle tends to be
     n: the dimensions of the puzzle
+    avg: the number of times to average the program
 
     Function runs the program 10 times and calculates the average time each algorithm takes
     keeps track of number of exceptions thrown """
@@ -299,7 +300,7 @@ def runAverage(shuffle, n):
     totalBFSTime = 0
     totalExceptionsBFS = 0
 
-    for i in range(10):
+    for i in range(avg):
         print("#" + str(i + 1))
         result = runOnce(shuffle, n)
         totalAStarTime = totalAStarTime + result[0]
@@ -309,15 +310,15 @@ def runAverage(shuffle, n):
         print("----")
         print(" ")
 
-    averageAStarTime = totalAStarTime/10
-    averageBFSTime = totalBFSTime/10
+    averageAStarTime = totalAStarTime/avg
+    averageBFSTime = totalBFSTime/avg
 
     print("Average solution times for a", n, "x", n, "puzzle that has been shuffled", shuffle, "times:")
     print("A* algorithm:", averageAStarTime, "seconds with", totalExceptionsAStar, "exceptions")
-    print("A* algorithm:", averageBFSTime, "seconds with", totalExceptionsBFS, "exceptions")
+    print("BFS algorithm:", averageBFSTime, "seconds with", totalExceptionsBFS, "exceptions")
 
 
-runAverage(10, 3)
-#runAverage(20,3)
-#runAverage(10,4)
-#runAverage(10,4)
+runAverage(10, 3, 50)
+#runAverage(20,3, 50)
+#runAverage(10,4, 50)
+#runAverage(10,4, 50)

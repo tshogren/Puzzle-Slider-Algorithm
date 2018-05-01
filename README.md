@@ -11,20 +11,20 @@ A sliding puzzle that consists of a frame of numbered square tiles in random ord
 where 0 indicates the missing tile.
 
 ## A-star Search Algorithm
-Uses heuristics to help determine the best path
-Searches paths based on whether or not they appear to be coming closer to the solution
-NxN puzzle: value based on depth of the search & distance from current state to solution state (Manhattan Distance)
-Distance = sum of amount of rows and columns each tile is away from its position in the solution state
+* Uses heuristics to help determine the best path
+* Searches paths based on whether or not they appear to be coming closer to the solution
+* NxN puzzle: value based on depth of the search & distance from current state to solution state (Manhattan Distance)
+* Distance = sum of amount of rows and columns each tile is away from its position in the solution state
 
 ## BFS Algorithm
-Checks every node for the best path using a queue to keep track of nodes that need to be checked
-Simple implementation either returns the correct node or an empty list if no solution can be found
-Does not rely on any kind of intelligence to omit less useful intermediate step
+* Checks every node for the best path using a queue to keep track of nodes that need to be checked
+* Simple implementation either returns the correct node or an empty list if no solution can be found
+*Does not rely on any kind of intelligence to omit less useful intermediate step
 
 ## Methods and Results
-Shuffle each puzzle to create a randomized puzzle. The higher the number of shuffles, the harder the puzzle is.
-Run each solution 50 times for both a 3x3 grid and a 4x4 grid. Then calculated the average solution time for each.
-If the best path is not found after 60 seconds, a time exception is thrown. The puzzle is either too hard to solve quickly, or may be unsolvable.
+* Shuffle each puzzle to create a randomized puzzle. The higher the number of shuffles, the harder the puzzle is.
+* Run each solution 50 times for both a 3x3 grid and a 4x4 grid. Then calculated the average solution time for each.
+* If the best path is not found after 60 seconds, a time exception is thrown. The puzzle is either too hard to solve quickly, or may be unsolvable.
 
 ## References / Resources
 

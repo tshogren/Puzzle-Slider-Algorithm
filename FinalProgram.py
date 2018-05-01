@@ -5,22 +5,18 @@ time.
 Authors: Hannah Gray, Thomas Shogren, Linh Vo
 """
 
+
 import random
 import numpy as np
 import time
 import signal
 
 
-# global variables
-algorithms = ["A*", "BFS"]
-
-
-
-
 class Puzzle:
-    # The class that represents the puzzles, their characteristics, and their functions.
-    # n is the dimension of the puzzle.
-    # Zero represents the empty spot in the puzzle where neighbor tiles can be moved to.
+    """This class represents the puzzles, their characteristics, and their functions.
+        n is the dimensions of the puzzle.
+        Zero represents the empty spot in the puzzle where neighbor tiles can be moved to."""
+
     def __init__(self, n):
         self.distance = 0  # distance away from solution
         self.size = n  # size of puzzle
@@ -33,12 +29,15 @@ class Puzzle:
         # Function that shuffles a solution to get a random puzzle.
         # As numMoves increases,the difficulty of the puzzles tend to increase.
         # If numMoves is 100, most of the puzzles take too long to solve.
+
         for i in range(0, numMoves):
             moves = self.getPossibleMoves()
             tile = random.choice(moves)
             self.swapTiles(tile)
 
-    def getPossibleMoves(self):  # Function that returns the row and column of the possible moves for a puzzle.
+    def getPossibleMoves(self):
+        # Function that returns the row and column of the possible moves for a puzzle.
+
         possibleMoves = []
         row, col = self.findValue(0)
         if row > 0:
@@ -51,21 +50,25 @@ class Puzzle:
             possibleMoves.append((row, col + 1))
         return possibleMoves
 
-    def findValue(self, value):  # Finds the row and column of the value in the puzzle
+    def findValue(self, value):
+        # Finds the row and column of the value in the puzzle
+
         for row in range(self.size):
             for col in range(self.size):
                 if self.matrix[row][col] == value:
                     return row, col
 
-    def getValue(self, row, col):  # Function that returns the value with the specified row and column.
+    def getValue(self, row, col):
+        # Function that returns the value with the specified row and column.
         return self.matrix[row][col]
 
-    def setValue(self, row, col, value):  # Function that sets a given value at a specified row and column.
+    def setValue(self, row, col, value):
+        # Function that sets a given value at a specified row and column.
         self.matrix[row][col] = value
 
     def swapTiles(self, tile):
-        # Function that swaps two tiles.
-        # Tile is the row and column of the tile we are trying to swap.
+        # Function that swaps two tiles. Tile is the row and column of the tile we are trying to swap.
+
         zero = self.findValue(0)
         self.setValue(zero[0], zero[1], self.getValue(*tile))
         self.setValue(tile[0], tile[1], 0)
@@ -73,6 +76,7 @@ class Puzzle:
     def findDistance(self, solution):
         # Finds the total distance that a puzzle state is away from the solution.
         # Distance is defined as the sum of the number of rows and columns that a tile is away from its solved state.
+
         distance = 0
         for i in range(0,self.size):
             for j in range(0,self.size):
@@ -83,22 +87,27 @@ class Puzzle:
                     distance = distance + score
         return distance
 
-    def findPath(self, path):  # Function that returns the path that solved the puzzle.
+    def findPath(self, path):
+        # Function that returns the path that solved the puzzle.
+
         if self.previous is None:
             return path
         else:
             path.append(self)
             return self.previous.findPath(path)
 
-    def copy(self):  # Function that copies a puzzle.
+    def copy(self):
+        # Function that copies a puzzle.
+
         puzzle = Puzzle(self.size)
         for i in range(0,self.size):
             puzzle.matrix[i] = self.matrix[i][:]
         return puzzle
 
     def createMoves(self):
-        # Function that returns a dictionary of moves that are 1 step away from a current state
-        # the keys are the puzzle state and the values are the possible puzzle states that can be obtained by making one move.
+        # Function that returns a dictionary.
+        # Keys are the puzzle state and the values are the possible puzzle states that can be obtained by making one move
+
         moves = self.getPossibleMoves()
         map = {}
         for move in moves:
@@ -106,15 +115,17 @@ class Puzzle:
         return map
 
     def swapAndCopy(self, b):
-        # Function that swaps a tile b and then updates the height and previous puzzle.
-        # It returns the new puzzle.
+        # Function that swaps tile b and then updates the height and previous puzzle and returns the new puzzle.
+
         p = self.copy()
         p.swapTiles(b)
         p.height = self.height + 1
         p.previous = self
         return p
 
-    def a_star_solve(self):  # Function that solves a puzzle using A* algorithm.
+    def a_star_solve(self):
+        # Function that solves a puzzle using A* algorithm.
+
         openList = [self]  # contains all nodes that need to be considered
         closedList = []  # the nodes that have already been visited
         while len(openList) > 0:
@@ -123,9 +134,9 @@ class Puzzle:
                 if len(closedList) > 0:
                     return puzzle.findPath([])
                 else:
-                    return [] # got rid of puzzle
+                    return []
 
-            children = puzzle.createMoves()  # gets the children of each node
+            children = puzzle.createMoves()
 
             for child in children:
                 openIndex = index(child, openList)
@@ -136,23 +147,25 @@ class Puzzle:
                     child.distance = distance
                     openList.append(child)
                 elif openIndex > -1:
-                    copy = openList[openIndex]  # this is a copy of the child
+                    copy = openList[openIndex]
                     if value < copy.distance + copy.height:
                         copy.distance = distance
                         copy.previous = child.previous
                         copy.height = child.height
                 elif closedIndex > -1:
                     copy = closedList[closedIndex]
-                    if value < copy.distance + copy.height:  # only when the value of the child is  less than this better value
+                    if value < copy.distance + copy.height:
                         child.distance = distance
                         closedList.remove(copy)
                         openList.append(child)
             closedList.append(puzzle)
-            openList = sorted(openList, key=lambda p: p.distance + p.height) #sorts them so the most relevant nodes are near the front of the frontier
+            openList = sorted(openList, key=lambda p: p.distance + p.height)
 
         return []
 
     def bfs_solve(self):
+        # Function solves puzzle using Breadth First Search
+
         frontier = [self]  # queue
         visited = []
         while frontier:  # while frontier has items in it
@@ -171,7 +184,6 @@ class Puzzle:
         return []
 
 
-
 def index(puzzle, list):
     # Returns the index of the puzzle in the open/closed list if it is in the list, or else it returns -1.
     if puzzle in list:
@@ -179,23 +191,34 @@ def index(puzzle, list):
     else:
         return -1
 
-def createSolution(n): #Creates the solution state for a nxn puzzle.
+
+def createSolution(n):
+    # Creates the solution state for a nxn puzzle.
     solution = np.arange(1, (n ** 2) + 1).reshape(n, n)
     solution[n - 1][n - 1] = 0
     return solution
 
 
-
-class TimeException(Exception):  # Class that allows for the algorithm to throw a time exception.
+class TimeException(Exception):
+    """Class that allows for the algorithm to throw a time exception."""
     pass
+
 
 def timeHandler(a,b):
     raise TimeException
 
+
 signal.signal(signal.SIGALRM, timeHandler)
 
 # =============== Timing Functions ==================
+
+
 def runTiming(shuffle, n):
+    """Shuffle: the number of times each puzzle will be shuffled. The higher the number of shuffles, the harder the
+    puzzle tends to be
+    n: the dimensions of a puzzle
+
+    Function creates and solves a single puzzle using A* and BFS and records time it took"""
     duration_A_star = 0
     AstarException = 0
     duration_bfs = 0
@@ -205,8 +228,8 @@ def runTiming(shuffle, n):
 
     print("Original Puzzle:")
     printPuzzle(puzzle)
-    for i in algorithms:
-        if i == "A*":
+    for i in range(2):
+        if i == 0:      # this means the function solves the A* algorithm first, and then the BFS one
             try:
                 startTime = time.time()
                 signal.alarm(60)
@@ -239,6 +262,11 @@ def runTiming(shuffle, n):
 
 
 def printResults(path, puzzle):
+    """ path: the steps in a solution to a puzzle
+
+    Function prints the number of moves it took to get a solution
+    can also print the matrix at every step in between the original and the solution
+    """
     path.reverse()
     moves = 0
     for i in path:
@@ -252,13 +280,20 @@ def printResults(path, puzzle):
 
 
 def printPuzzle(puzzle):
+    """Function converts a puzzle matrix into a readable string object"""
+
     print("\n".join(' '.join(map(str, row)) for row in puzzle.matrix))
     print()
 
 
 def runAverage(shuffle, n):
-    # Function that compares how long the two algorithms take to find the shortest path on average
-    # and checks how many time exceptions each algorithm throws.
+    """Shuffle: the number of times each puzzle will be shuffled. The higher the number of shuffles, the harder the
+    puzzle tends to be
+    n: the dimensions of the puzzle
+
+    Function runs the program 10 times and calculates the average time each algorithm takes
+    keeps track of number of exceptions thrown """
+
     totalAStarTime = 0
     totalExceptionsAStar = 0
     totalBFSTime = 0
@@ -271,6 +306,8 @@ def runAverage(shuffle, n):
         totalExceptionsAStar = totalExceptionsAStar + result[1]
         totalBFSTime = totalBFSTime + result[2]
         totalExceptionsBFS = totalExceptionsBFS + result[3]
+        print("----")
+        print(" ")
 
     averageAStarTime = totalAStarTime/10
     averageBFSTime = totalBFSTime/10

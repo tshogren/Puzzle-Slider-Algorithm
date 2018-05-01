@@ -28,11 +28,11 @@ If the best path is not found after 60 seconds, a time exception is thrown. The 
 
 ## References / Resources
 
-http://tristanpenman.com/demos/n-puzzle/ 
-https://www.geeksforgeeks.org/a-search-algorithm/ 
-https://en.wikipedia.org/wiki/A*_search_algorithm 
-https://en.wikipedia.org/wiki/Breadth-first_search 
-https://en.wikipedia.org/wiki/15_puzzle 
+* http://tristanpenman.com/demos/n-puzzle/ 
+* https://www.geeksforgeeks.org/a-search-algorithm/ 
+* https://en.wikipedia.org/wiki/A*_search_algorithm 
+* https://en.wikipedia.org/wiki/Breadth-first_search 
+* https://en.wikipedia.org/wiki/15_puzzle 
 
 
 

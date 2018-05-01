@@ -213,7 +213,7 @@ signal.signal(signal.SIGALRM, timeHandler)
 # =============== Timing Functions ==================
 
 
-def runTiming(shuffle, n):
+def runOnce(shuffle, n):
     """Shuffle: the number of times each puzzle will be shuffled. The higher the number of shuffles, the harder the
     puzzle tends to be
     n: the dimensions of a puzzle
@@ -301,7 +301,7 @@ def runAverage(shuffle, n):
 
     for i in range(10):
         print("#" + str(i + 1))
-        result = runTiming(shuffle, n)
+        result = runOnce(shuffle, n)
         totalAStarTime = totalAStarTime + result[0]
         totalExceptionsAStar = totalExceptionsAStar + result[1]
         totalBFSTime = totalBFSTime + result[2]
@@ -315,7 +315,6 @@ def runAverage(shuffle, n):
     print("Average solution times for a", n, "x", n, "puzzle that has been shuffled", shuffle, "times:")
     print("A* algorithm:", averageAStarTime, "seconds with", totalExceptionsAStar, "exceptions")
     print("A* algorithm:", averageBFSTime, "seconds with", totalExceptionsBFS, "exceptions")
-
 
 
 runAverage(10, 3)

@@ -28,7 +28,7 @@ where 0 indicates the missing tile.
 
 ## References
 Puzzle Class Code:
-*https://gist.github.com/flatline/838202
+* https://gist.github.com/flatline/838202
 
 ## Resources
 * http://tristanpenman.com/demos/n-puzzle/ 

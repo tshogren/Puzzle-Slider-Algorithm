@@ -26,13 +26,16 @@ where 0 indicates the missing tile.
 * Run each solution 50 times for both a 3x3 grid and a 4x4 grid. Then calculated the average solution time for each.
 * If the best path is not found after 60 seconds, a time exception is thrown. The puzzle is either too hard to solve quickly, or may be unsolvable.
 
-## References / Resources
+## References
+Puzzle Class Code:
+*https://gist.github.com/flatline/838202
 
+## Resources
 * http://tristanpenman.com/demos/n-puzzle/ 
 * https://www.geeksforgeeks.org/a-search-algorithm/ 
 * https://en.wikipedia.org/wiki/A*_search_algorithm 
 * https://en.wikipedia.org/wiki/Breadth-first_search 
-* https://en.wikipedia.org/wiki/15_puzzle 
+* https://en.wikipedia.org/wiki/15_puzzle
 
 ## Notes
 
